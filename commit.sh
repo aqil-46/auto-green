@@ -1,12 +1,18 @@
 #!/bin/bash
 
-# Nama file log yang akan diubah-ubah isinya
+# Nama file log
 LOG_FILE="activity.log"
 
-# Tambahkan tanggal dan waktu saat ini ke dalam file log
-echo "Commit otomatis pada: $(date)" >> "$LOG_FILE"
+# Melakukan perulangan sebanyak 100 kali
+for i in {1..100}
+do
+  # Tambahkan teks unik ke file log agar setiap commit berbeda
+  echo "Auto commit ke-$i pada: $(date)" >> "$LOG_FILE"
+  
+  # Git add dan commit untuk setiap perulangan
+  git add "$LOG_FILE"
+  git commit -m "chore: bulk auto-commit number $i"
+done
 
-# Git add, commit, dan push
-git add "$LOG_FILE"
-git commit -m "chore: auto-update activity log $(date +%Y-%m-%d)"
+# Push sekali saja ke GitHub di akhir perulangan agar lebih cepat
 git push origin main
